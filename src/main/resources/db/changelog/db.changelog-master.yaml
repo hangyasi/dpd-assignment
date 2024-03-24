@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: classpath:/db/changelog/changes/01-user-info.sql
+  - include:
+      file: classpath:/db/changelog/changes/02-user-addresses.sql
+  - include:
+      file: classpath:/db/changelog/changes/03-phone-numbers.sql
