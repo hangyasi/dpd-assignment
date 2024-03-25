@@ -1,10 +1,12 @@
 package com.dpd.usermanagement.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -15,6 +17,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank(message = "Name is mandatory")
     private String name;
 
     private LocalDate birthdate;
@@ -27,31 +30,14 @@ public class User {
 
     private String taxIdentificationNumber;
 
+    @NotBlank(message = "Email is mandatory")
+    @Email
     private String emailAddress;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Address> addresses;
+    private List<Address> addresses;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<PhoneNumber> phoneNumbers;
+    private List<PhoneNumber> phoneNumbers;
 
-    public void addAddress(Address address) {
-        addresses.add(address);
-        address.setUser(this);
-    }
-
-    public void removeAddress(Address address) {
-        addresses.remove(address);
-        address.setUser(null);
-    }
-
-    public void addPhoneNumber(PhoneNumber phoneNumber) {
-        phoneNumbers.add(phoneNumber);
-        phoneNumber.setUser(this);
-    }
-
-    public void removePhoneNumber(PhoneNumber phoneNumber) {
-        phoneNumbers.remove(phoneNumber);
-        phoneNumber.setUser(null);
-    }
 }

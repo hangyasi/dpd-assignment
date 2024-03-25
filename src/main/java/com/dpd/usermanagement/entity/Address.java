@@ -1,5 +1,6 @@
 package com.dpd.usermanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,9 +17,10 @@ public class Address {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
-    private  String postalCode;
+    private String postalCode;
 
     private String country;
 
@@ -28,16 +30,4 @@ public class Address {
 
     private String number;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Address address = (Address) o;
-        return Objects.equals(id, address.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

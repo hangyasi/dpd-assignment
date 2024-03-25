@@ -1,9 +1,8 @@
 package com.dpd.usermanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.util.Objects;
 
 @Entity
 @Table(name = "phone_numbers")
@@ -16,20 +15,9 @@ public class PhoneNumber {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     private String phoneNumber;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PhoneNumber that = (PhoneNumber) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }
