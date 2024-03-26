@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:14-alpine
+    container_name: db
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=dpd_pass
+      - POSTGRES_USER=dpd_user
+      - POSTGRES_DB=dpd_db
+
+  app-backend:
+    image: 'hangyasi/dpd:usermanagement-dpd'
+    container_name: app-backend
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/dpd_db
+      - SPRING_DATASOURCE_USERNAME=dpd_user
+      - SPRING_DATASOURCE_PASSWORD=dpd_pass
+    ports:
+      - "8080:8080"
+
+  app-ui:
+    image: 'hangyasi/dpd:usermanagement-dpd-ui'
+    container_name: app-ui
+    depends_on:
+      - app-backend
+    ports:
+      - "3000:3000"
